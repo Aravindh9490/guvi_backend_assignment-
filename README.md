@@ -1,17 +1,20 @@
 # Authentication
 
-Given an `app.js` file and a database file `userData.db` consisting of a  table `user`.
-
-Write APIs to perform operations on the table `user` containing the following columns,
-
 **User Table**
 
-| Column   | Type    |
-| -------- | ------- |
+| Column   | Type |
+| -------- | ---- |
 | username | TEXT |
-| name     | TEXT    |
-| password | TEXT    |
-| gender   | TEXT    |
+| name     | TEXT |
+| password | TEXT |
+| gender   | TEXT |
+| email    | TEXT |
+| location | TEXT |
+| age      | INT  |
+| dod      | DATE |
+| gender   | TEXT |
+| adders   | TEXT |
+
 |location|TEXT|
 
 ### API 1
@@ -24,11 +27,9 @@ Write APIs to perform operations on the table `user` containing the following co
 
 ```
 {
-  "username": "adam_richard",
-  "name": "Adam Richard",
+  "email":"aranggkg@gmail.com",
   "password": "richard_567",
-  "gender": "male",
-  "location": "Detroit"
+
 }
 ```
 
@@ -71,14 +72,14 @@ Write APIs to perform operations on the table `user` containing the following co
     Successful registration of the registrant
 
   - **Response**
-      - **Status code**
-        ```
-        200
-        ```
-      - **Status text**
-       ```
-       User created successfully
-       ```
+    - **Status code**
+      ```
+      200
+      ```
+    - **Status text**
+    ```
+    User created successfully
+    ```
 
 ### API 2
 
@@ -87,10 +88,12 @@ Write APIs to perform operations on the table `user` containing the following co
 #### Method: `POST`
 
 **Request**
+
 ```
 {
-  "username": "adam_richard",
-  "password": "richard_567"
+  "email":"aranggkg@gmail.com",
+  "password": "richard_567",
+
 }
 ```
 
@@ -152,8 +155,8 @@ Write APIs to perform operations on the table `user` containing the following co
 
 ```
 {
-  "username": "adam_richard",
-  "oldPassword": "richard_567",
+  "email":"aranggkg@gmail.com",
+  "password": "richard_567",
   "newPassword": "richard@123"
 }
 ```
@@ -206,11 +209,6 @@ Write APIs to perform operations on the table `user` containing the following co
       Password updated
       ```
 
-
 <br/>
-
-Use `npm install` to install the packages.
-
-**Export the express instance using the default export syntax.**
 
 **Use Common JS module syntax.**
