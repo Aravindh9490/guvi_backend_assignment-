@@ -1,0 +1,40 @@
+GET  http://localhost:3000/all
+
+####
+
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "email":"aravind@gmail.com",
+    "password":"aravind@123",
+    "confirm_password":"aravind@123"
+}
+
+###
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email":"aravind@gmail.com",
+    "password":"aravind@123"
+}
+
+####
+
+PUT http://localhost:3000/user-details
+Content-Type: application/json
+
+{
+    
+    "username":"ARA",
+    "name":"Aravind",
+    "gender":"male",
+    "location":"AP",
+    "email":"aravind@gmail.com",
+    "age":23,
+    "mobile_num":888888444,
+    "dob":"2000-08-04",
+    "full_address":"kuppam,PES"
+}
