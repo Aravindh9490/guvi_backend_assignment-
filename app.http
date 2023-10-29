@@ -24,6 +24,7 @@ Content-Type: application/json
 ####
 
 PUT http://localhost:3000/user-details
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyYXZpbmRAZ21haWwuY29tIiwiaWF0IjoxNjk4NTQyODQ2fQ.6nBa_xEzrEKsN-imZ8h_tmw4KLVPbMVaNl5QCa5010I
 Content-Type: application/json
 
 {

@@ -3,6 +3,7 @@ const { open } = require("sqlite");
 const sqlite3 = require("sqlite3");
 const path = require("path");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const databasePath = path.join(__dirname, "userData.db");
 
@@ -52,7 +53,7 @@ app.post("/register", async (request, response) => {
       );`;
     if (validatePassword(password)) {
       await database.run(createUserQuery);
-      response.send("User created successfully");
+      response.send("User created successfully. Please Login");
     } else {
       response.status(400);
       response.send("Password is too short");
@@ -79,7 +80,10 @@ app.post("/login", async (request, response) => {
       databaseUser.password
     );
     if (isPasswordMatched === true) {
-      response.send("Login success!");
+      const payload = { email: email };
+      const jwtToken = jwt.sign(payload, "abcdef");
+      //   console.log(jwtToken);
+      response.send({ jwtToken });
     } else {
       response.status(400);
       response.send("Invalid password");
@@ -87,7 +91,28 @@ app.post("/login", async (request, response) => {
   }
 });
 
-app.put("/change-password", async (request, response) => {
+const authentication = (request, response, next) => {
+  let jwtToken;
+  const token = request.headers["authorization"];
+  if (token !== undefined) {
+    jwtToken = token.split(" ")[1];
+  }
+  if (token === undefined) {
+    response.status(401);
+    res.send("Invalid JWT Token");
+  } else {
+    jwt.verify(jwtToken, "abcdef", async (error, payload) => {
+      if (error) {
+        response.status(401);
+        response.send("Invalid JWT Token");
+      } else {
+        next();
+      }
+    });
+  }
+};
+
+app.put("/change-password", authentication, async (request, response) => {
   const { email, oldPassword, newPassword } = request.body;
   const selectUserQuery = `SELECT * FROM user WHERE email = '${email}';`;
   const databaseUser = await database.get(selectUserQuery);
@@ -124,7 +149,7 @@ app.put("/change-password", async (request, response) => {
   }
 });
 
-app.put("/user-details", async (request, response) => {
+app.put("/user-details", authentication, async (request, response) => {
   const {
     username,
     name,
