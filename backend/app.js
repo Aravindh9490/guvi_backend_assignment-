@@ -67,29 +67,33 @@ app.post("/register", async (request, response) => {
 });
 
 app.post("/login", async (request, response) => {
-  const { email, password } = request.body;
-  //   console.log(email, password);
-  const selectUserQuery = `SELECT * FROM user WHERE email = '${email}';`;
-  const databaseUser = await database.get(selectUserQuery);
-  //   console.log(databaseUser);
+  try {
+    const { email, password } = request.body;
+    const selectUserQuery = `SELECT * FROM user WHERE email = '${email}';`;
+    const databaseUser = await database.get(selectUserQuery);
 
-  if (databaseUser === undefined) {
-    response.status(400);
-    response.send("Invalid user");
-  } else {
-    const isPasswordMatched = await bcrypt.compare(
-      password,
-      databaseUser.password
-    );
-    if (isPasswordMatched === true) {
-      const payload = { email: email };
-      const jwtToken = jwt.sign(payload, "abcdef");
-      //   console.log(jwtToken);
-      response.send({ jwtToken });
-    } else {
+    if (databaseUser === undefined) {
       response.status(400);
-      response.send("Invalid password");
+      response.send("Invalid user");
+    } else {
+      const isPasswordMatched = await bcrypt.compare(
+        password,
+        databaseUser.password
+      );
+      if (isPasswordMatched === true) {
+        const payload = { email: email };
+        const jwtToken = jwt.sign(payload, "abcdef");
+        response.send({ jwtToken });
+      } else {
+        response.status(400);
+        response.send("Invalid password");
+      }
     }
+  } catch (error) {
+    // Handle errors here
+    console.error("Error in login:", error);
+    response.status(500);
+    response.send("Internal Server Error", error);
   }
 });
 
@@ -193,7 +197,7 @@ app.put("/user-details", authentication, async (request, response) => {
 app.get("/all", async (req, res) => {
   const sqlQuery = `select * from user;`;
   const result = await database.all(sqlQuery);
-  res.send(result);
+  res.send({ result });
 });
 
 module.exports = app;
