@@ -11,7 +11,13 @@ const databasePath = path.join(__dirname, "userData.db");
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+
+const corsOptions = {
+  origin: "*",
+  methods: "GET, POST, PUT, DELETE",
+};
+
+app.use(cors(corsOptions));
 
 let database = null;
 
