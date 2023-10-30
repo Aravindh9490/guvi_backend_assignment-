@@ -74,7 +74,7 @@ app.post("/login", async (request, response) => {
 
     if (databaseUser === undefined) {
       response.status(400);
-      response.send("Invalid user");
+      response.json({ error: "Invalid user" }); // Send JSON error response
     } else {
       const isPasswordMatched = await bcrypt.compare(
         password,
@@ -83,17 +83,17 @@ app.post("/login", async (request, response) => {
       if (isPasswordMatched === true) {
         const payload = { email: email };
         const jwtToken = jwt.sign(payload, "abcdef");
-        response.send({ jwtToken });
+        response.json({ jwtToken }); // Send JSON success response
       } else {
         response.status(400);
-        response.send("Invalid password");
+        response.json({ error: "Invalid password" }); // Send JSON error response
       }
     }
   } catch (error) {
-    // Handle errors here
+    // Handle other errors
     console.error("Error in login:", error);
     response.status(500);
-    response.send("Internal Server Error", error);
+    response.json({ error: "Internal Server Error" }); // Send JSON error response
   }
 });
 
