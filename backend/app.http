@@ -1,39 +1,39 @@
-GET  http://localhost:3000/all
+GET https://aravind-guvi-backend.onrender.com/all
 
 ####
 
-POST http://localhost:3000/register
+POST https://aravind-guvi-backend.onrender.com/register
 Content-Type: application/json
 
 {
-    "email":"aravind@gmail.com",
-    "password":"aravind@123",
-    "confirm_password":"aravind@123"
+    "email":"mkbh@gmail.com",
+    "password":"mkbh@123",
+    "confirm_password":"mkbh@123"
 }
 
 ###
 
-POST http://localhost:3000/login
+POST https://aravind-guvi-backend.onrender.com/login
 Content-Type: application/json
 
 {
-    "email":"aravind@gmail.com",
-    "password":"aravind@123"
+    "email":"mkbh@gmail.com",
+    "password":"mkbh@123"
 }
 
 ####
 
-PUT http://localhost:3000/user-details
+PUT https://aravind-guvi-backend.onrender.com/user-details
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyYXZpbmRAZ21haWwuY29tIiwiaWF0IjoxNjk4NTQyODQ2fQ.6nBa_xEzrEKsN-imZ8h_tmw4KLVPbMVaNl5QCa5010I
 Content-Type: application/json
 
 {
     
     "username":"ARA",
-    "name":"Aravind",
+    "name":"Al",
     "gender":"male",
     "location":"AP",
-    "email":"aravind@gmail.com",
+    "email":"mkbh@gmail.com",
     "age":23,
     "mobile_num":888888444,
     "dob":"2000-08-04",

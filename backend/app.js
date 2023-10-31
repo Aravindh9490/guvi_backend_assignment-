@@ -12,9 +12,16 @@ const app = express();
 
 app.use(express.json());
 
+const allowedOrigins = ["http://localhost:3000"];
+
 const corsOptions = {
-  origin: "*",
-  methods: "GET, POST, PUT, DELETE",
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
 };
 
 app.use(cors(corsOptions));
@@ -80,7 +87,7 @@ app.post("/login", async (request, response) => {
 
     if (databaseUser === undefined) {
       response.status(400);
-      response.json({ error: "Invalid user" }); // Send JSON error response
+      response.json({ error: "Invalid email" }); // Send JSON error response
     } else {
       const isPasswordMatched = await bcrypt.compare(
         password,
