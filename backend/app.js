@@ -56,18 +56,18 @@ app.post("/register", async (request, response) => {
       );`;
     if (validatePassword(password)) {
       await database.run(createUserQuery);
-      response.send("User created successfully. Please Login");
+      response.json({ result: "User created successfully. Please Login" });
     } else {
       response.status(400);
-      response.send("Password is too short");
+      response.json({ result: "Password is too short" });
     }
   } else {
     response.status(400);
-    response.send("User already exists");
+    response.json({ result: "User already exists" });
   }
 });
 
-app.post("/login", async (request, response) => {
+app.get("/login", async (request, response) => {
   try {
     const { email, password } = request.body;
     const selectUserQuery = `SELECT * FROM user WHERE email = '${email}';`;
